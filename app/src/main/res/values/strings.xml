@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">FRIENDLY FIRE Tasks</string>
+    <string name="app_name">Задачи</string>
+
+    <string name="button_add">button_add_task</string>
 </resources>

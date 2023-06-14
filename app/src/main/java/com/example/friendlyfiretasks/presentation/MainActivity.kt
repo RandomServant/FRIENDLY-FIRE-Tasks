@@ -1,7 +1,8 @@
-package com.example.friendlyfiretasks
+package com.example.friendlyfiretasks.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.friendlyfiretasks.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
