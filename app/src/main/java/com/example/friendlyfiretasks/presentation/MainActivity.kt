@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         recycler.layoutManager = LinearLayoutManager(this)
 
         adapter.onClick = {
-            startActivity(TaskActivity.getIntent(this, it.name, it.description))
+            startActivity(TaskActivity.getIntent(this, it.name, it.description, it.date))
         }
 
         adapter.onLongClick = { task, pos ->
@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.getAllTaskList()
 
         findViewById<FloatingActionButton>(R.id.button_add).setOnClickListener {
-            viewModel.addTaskToList("New task", "desc")
+            viewModel.addTaskToList("New task", "desc", "")
         }
     }
 }

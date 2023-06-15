@@ -10,7 +10,7 @@ object RepositoryImplementation : Repository{
 
     init {
         for (i in 0..5) {
-            val task = Task("Task № ${i}", "Description № ${i}")
+            val task = Task("Task № ${i}", "Description № ${i}", "")
             createTask(task)
         }
     }

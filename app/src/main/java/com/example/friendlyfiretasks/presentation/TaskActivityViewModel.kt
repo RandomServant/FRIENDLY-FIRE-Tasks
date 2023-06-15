@@ -20,8 +20,8 @@ class TaskActivityViewModel : ViewModel(){
         taskList.value = getAllTaskListUseCase.execute()
     }
 
-    fun addTaskToList(title: String, description: String) {
-        addTaskUseCase.execute(Task(title, description))
+    fun addTaskToList(title: String, description: String, date: String) {
+        addTaskUseCase.execute(Task(title, description, date))
         getAllTaskList()
     }
 
