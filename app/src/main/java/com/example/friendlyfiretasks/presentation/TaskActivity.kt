@@ -3,9 +3,11 @@ package com.example.friendlyfiretasks.presentation
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.friendlyfiretasks.R
+import com.google.android.material.textfield.TextInputEditText
 
 class TaskActivity : AppCompatActivity() {
 
@@ -18,8 +20,8 @@ class TaskActivity : AppCompatActivity() {
 
         description = intent.getStringExtra(DESCRIPTION_EXTRA).toString()
         name = intent.getStringExtra(NAME_EXTRA).toString()
-        findViewById<TextView>(R.id.nameBox).text = name
-        findViewById<TextView>(R.id.editDate).text = description
+        findViewById<TextInputEditText>(R.id.nameBox).setText(name)
+        //findViewById<EditText>(R.id.editDate).text = description
     }
 
     companion object {
