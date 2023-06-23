@@ -3,14 +3,16 @@ package com.example.friendlyfiretasks.presentation
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.example.friendlyfiretasks.R
-import com.google.android.material.textfield.TextInputEditText
+import com.example.friendlyfiretasks.data.Task
 
 class TaskActivity : AppCompatActivity() {
 
+    private lateinit var id: String
     private lateinit var name: String
     private lateinit var description: String
     private lateinit var date: String
@@ -18,6 +20,14 @@ class TaskActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task)
+
+        findViewById<Button>(R.id.backButton).setOnClickListener {
+            startActivity(MainActivity.getIntent(this))
+        }
+
+        findViewById<Button>(R.id.deleteButton).setOnClickListener {
+            startActivity(MainActivity.getIntent(this))
+        }
 
         description = intent.getStringExtra(DESCRIPTION_EXTRA).toString()
         name = intent.getStringExtra(NAME_EXTRA).toString()
@@ -29,13 +39,15 @@ class TaskActivity : AppCompatActivity() {
     }
 
     companion object {
+        private const val ID_EXTRA = Task.UNDEFINED_ID.toString()
         private const val NAME_EXTRA = "NAME"
         private const val DESCRIPTION_EXTRA = "DESK"
         private const val DATE_EXTRA = ""
 
-        fun getIntent(context: Context, name: String, description: String, date: String) : Intent {
+        fun getIntent(context: Context, id: String, name: String, description: String, date: String) : Intent {
             val intent = Intent(context, TaskActivity::class.java)
             intent.putExtra(NAME_EXTRA, name)
+            intent.putExtra(ID_EXTRA, id)
             intent.putExtra(DESCRIPTION_EXTRA, description)
             intent.putExtra(DATE_EXTRA, date)
             return intent

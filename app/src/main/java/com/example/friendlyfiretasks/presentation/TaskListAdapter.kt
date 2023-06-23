@@ -23,7 +23,7 @@ class TaskListAdapter(): ListAdapter<Task, TaskListAdapter.MyViewHolder>(
                 R.layout.task_item
             }
             FAVORITE_TYPE -> {
-                R.layout.task_item
+                R.layout.task_item_favorite
             }
             else -> {
                 R.layout.task_item

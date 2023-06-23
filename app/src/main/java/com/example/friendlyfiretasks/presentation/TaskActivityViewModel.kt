@@ -7,6 +7,7 @@ import com.example.friendlyfiretasks.data.Task
 import com.example.friendlyfiretasks.domain.useCases.AddTaskUseCase
 import com.example.friendlyfiretasks.domain.useCases.ChangeFavouriteStateUseCase
 import com.example.friendlyfiretasks.domain.useCases.GetAllTaskListUseCase
+import com.example.friendlyfiretasks.domain.useCases.RemoveTaskUseCase
 
 class TaskActivityViewModel : ViewModel(){
 
@@ -15,6 +16,7 @@ class TaskActivityViewModel : ViewModel(){
     private val getAllTaskListUseCase = GetAllTaskListUseCase(repository)
     private val changeFavoriteState = ChangeFavouriteStateUseCase(repository)
     private val addTaskUseCase = AddTaskUseCase(repository)
+    private val removeTaskUseCase = RemoveTaskUseCase(repository)
 
     fun getAllTaskList() {
         taskList.value = getAllTaskListUseCase.execute()
@@ -22,6 +24,11 @@ class TaskActivityViewModel : ViewModel(){
 
     fun addTaskToList(title: String, description: String, date: String) {
         addTaskUseCase.execute(Task(title, description, date))
+        getAllTaskList()
+    }
+
+    fun removeTaskToList(task: Task) {
+        removeTaskUseCase.execute(task)
         getAllTaskList()
     }
 

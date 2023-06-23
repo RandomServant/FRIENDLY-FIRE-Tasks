@@ -1,5 +1,7 @@
 package com.example.friendlyfiretasks.presentation
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
@@ -24,7 +26,8 @@ class MainActivity : AppCompatActivity() {
         recycler.layoutManager = LinearLayoutManager(this)
 
         adapter.onClick = {
-            startActivity(TaskActivity.getIntent(this, it.name, it.description, it.date))
+            startActivity(TaskActivity.getIntent(
+                this, it.id.toString(), it.name, it.description, it.date))
         }
 
         adapter.onLongClick = { task, pos ->
@@ -41,6 +44,13 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<FloatingActionButton>(R.id.button_add).setOnClickListener {
             viewModel.addTaskToList("New task", "desc", "")
+        }
+    }
+
+    companion object {
+        fun getIntent(context: Context) : Intent {
+            val intent = Intent(context, MainActivity::class.java)
+            return intent
         }
     }
 }
