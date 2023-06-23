@@ -1,4 +1,4 @@
-package com.example.friendlyfiretasks.data.entity
+package com.example.friendlyfiretasks.data.room.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
