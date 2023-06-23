@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.friendlyfiretasks.R
-import com.example.friendlyfiretasks.data.Task
+import com.example.friendlyfiretasks.domain.models.Task
 
 class TaskListAdapter(): ListAdapter<Task, TaskListAdapter.MyViewHolder>(
     CallBack()

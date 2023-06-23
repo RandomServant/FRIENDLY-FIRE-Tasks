@@ -1,5 +1,6 @@
 package com.example.friendlyfiretasks.data
 
+import com.example.friendlyfiretasks.domain.models.Task
 import com.example.friendlyfiretasks.domain.Repository
 
 object RepositoryImplementation : Repository{

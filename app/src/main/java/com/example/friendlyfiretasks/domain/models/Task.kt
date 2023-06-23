@@ -1,4 +1,4 @@
-package com.example.friendlyfiretasks.data
+package com.example.friendlyfiretasks.domain.models
 
 data class Task(
     var name: String,

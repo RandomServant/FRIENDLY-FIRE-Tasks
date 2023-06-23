@@ -6,9 +6,8 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.example.friendlyfiretasks.R
-import com.example.friendlyfiretasks.data.Task
+import com.example.friendlyfiretasks.domain.models.Task
 
 class TaskActivity : AppCompatActivity() {
 

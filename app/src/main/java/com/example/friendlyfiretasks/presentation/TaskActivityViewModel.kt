@@ -3,7 +3,7 @@ package com.example.friendlyfiretasks.presentation
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.friendlyfiretasks.data.RepositoryImplementation
-import com.example.friendlyfiretasks.data.Task
+import com.example.friendlyfiretasks.domain.models.Task
 import com.example.friendlyfiretasks.domain.useCases.AddTaskUseCase
 import com.example.friendlyfiretasks.domain.useCases.ChangeFavouriteStateUseCase
 import com.example.friendlyfiretasks.domain.useCases.GetAllTaskListUseCase

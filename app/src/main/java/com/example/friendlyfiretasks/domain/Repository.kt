@@ -1,6 +1,6 @@
 package com.example.friendlyfiretasks.domain
 
-import com.example.friendlyfiretasks.data.Task
+import com.example.friendlyfiretasks.domain.models.Task
 
 interface Repository {
     fun createTask (task: Task)
