@@ -8,49 +8,67 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.friendlyfiretasks.R
+import com.example.friendlyfiretasks.databinding.ActivityMainBinding
+import com.example.friendlyfiretasks.di.Dependencies
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
+import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: TaskActivityViewModel
+    lateinit var binding: ActivityMainBinding
+    lateinit var vpAdapter: ViewPagerAdapter
+    lateinit var vm: MainViewModel
+    var tabIndex: Int = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        viewModel = ViewModelProvider(this)[TaskActivityViewModel::class.java]
+        vm = ViewModelProvider(this)[MainViewModel::class.java]
 
-        val recycler = findViewById<RecyclerView>(R.id.recycler)
-        val adapter = TaskListAdapter()
-        recycler.adapter = adapter
-        recycler.layoutManager = LinearLayoutManager(this)
+        Dependencies.taskRepository
 
-        adapter.onClick = {
-            startActivity(TaskActivity.getIntent(
-                this, it.id.toString(), it.name, it.description, it.date))
+
+        vm.taskLists.observe(this){
+            vpAdapter = ViewPagerAdapter(this, it)
+            binding.viewPager.adapter = vpAdapter
+            TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, pos ->
+                tab.text = it[pos].name
+            }.attach()
         }
 
-        adapter.onLongClick = { task, pos ->
-            viewModel.changeFavoriteState(task)
-            adapter.update(pos)
-            true
+
+
+        binding.addTaskListButton.setOnClickListener {
+            startActivity(
+                vm.taskLists.value?.get(tabIndex)?.let { it1 -> TaskActivity.getIntent(this, it.id) })
         }
 
-        viewModel.taskList.observe(this) {
-            adapter.submitList(it)
-        }
 
-        viewModel.getAllTaskList()
 
-        findViewById<FloatingActionButton>(R.id.button_add).setOnClickListener {
-            viewModel.addTaskToList("New task", "desc", "")
-        }
+        vm.getAllTAskList()
+
+        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                tabIndex = tab!!.position
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+                return
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+                return
+            }
+        })
     }
 
-    companion object {
-        fun getIntent(context: Context) : Intent {
-            val intent = Intent(context, MainActivity::class.java)
-            return intent
-        }
+    override fun onResume() {
+        super.onResume()
+        vm.getAllTAskList()
     }
 }

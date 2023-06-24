@@ -7,48 +7,38 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.example.friendlyfiretasks.R
+import com.example.friendlyfiretasks.databinding.ActivityTaskBinding
+import com.example.friendlyfiretasks.di.Dependencies
 import com.example.friendlyfiretasks.domain.models.Task
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class TaskActivity : AppCompatActivity() {
 
-    private lateinit var id: String
-    private lateinit var name: String
-    private lateinit var description: String
-    private lateinit var date: String
+    lateinit var binding: ActivityTaskBinding
+
+    val taskListID by lazy { intent.getIntExtra(ARG_TASK_LIST_ID, 0)}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_task)
+        binding = ActivityTaskBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.saveButton.setOnClickListener {
+            val title = binding.editName.text.toString()
+            val desc = binding.editDesc.text.toString()
+            val date = binding.editDate.text.toString()
+            GlobalScope.launch {
+                Dependencies.taskRepository.addTask(Task(title, desc, taskListID, date))
+            }
 
-        findViewById<Button>(R.id.backButton).setOnClickListener {
-            startActivity(MainActivity.getIntent(this))
         }
-
-        findViewById<Button>(R.id.deleteButton).setOnClickListener {
-            startActivity(MainActivity.getIntent(this))
-        }
-
-        description = intent.getStringExtra(DESCRIPTION_EXTRA).toString()
-        name = intent.getStringExtra(NAME_EXTRA).toString()
-        date = intent.getStringExtra(DATE_EXTRA).toString()
-
-        findViewById<EditText>(R.id.editName).setText(name)
-        findViewById<EditText>(R.id.editDesc).setText(description)
-        findViewById<EditText>(R.id.editDate).setText(date)
     }
 
     companion object {
-        private const val ID_EXTRA = Task.UNDEFINED_ID.toString()
-        private const val NAME_EXTRA = "NAME"
-        private const val DESCRIPTION_EXTRA = "DESK"
-        private const val DATE_EXTRA = ""
-
-        fun getIntent(context: Context, id: String, name: String, description: String, date: String) : Intent {
+        private const val ARG_TASK_LIST_ID = "taskListID"
+        fun getIntent(context: Context, taskListId: Int) : Intent{
             val intent = Intent(context, TaskActivity::class.java)
-            intent.putExtra(NAME_EXTRA, name)
-            intent.putExtra(ID_EXTRA, id)
-            intent.putExtra(DESCRIPTION_EXTRA, description)
-            intent.putExtra(DATE_EXTRA, date)
+            intent.putExtra(ARG_TASK_LIST_ID, taskListId)
             return intent
         }
     }
