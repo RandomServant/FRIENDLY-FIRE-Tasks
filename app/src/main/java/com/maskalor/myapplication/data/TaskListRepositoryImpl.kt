@@ -12,15 +12,6 @@ class TaskListRepositoryImpl(private val taskListDao: TaskListDao) : TaskListRep
 
     private val mapper = Mapper()
 
-    init {
-        GlobalScope.launch {
-            if (getAllTaskLists().size < 2) {
-                addTaskList(TaskList("Favorite", true))
-                addTaskList(TaskList("My Tasks", true))
-            }
-        }
-    }
-
     override suspend fun addTaskList(taskList: TaskList) {
         taskListDao.addTaskList(mapper.taskListToTaskListEntity(taskList))
     }
