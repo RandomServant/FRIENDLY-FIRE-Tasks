@@ -2,6 +2,7 @@ package com.maskalor.myapplication.data
 
 import com.maskalor.myapplication.domain.dao.TaskListDao
 import com.maskalor.myapplication.data.room.entity.TaskListEntity
+import com.maskalor.myapplication.di.Dependencies
 import com.maskalor.myapplication.domain.TaskListRepository
 import com.maskalor.myapplication.domain.models.TaskList
 import kotlinx.coroutines.GlobalScope
@@ -11,12 +12,14 @@ class TaskListRepositoryImpl(private val taskListDao: TaskListDao) : TaskListRep
 
     private val mapper = Mapper()
 
-//    init {
-//        GlobalScope.launch {
-//            addTaskList(TaskList("Favorite"))
-//            addTaskList(TaskList("My Tasks"))
-//        }
-//    }
+    init {
+        GlobalScope.launch {
+            if (getAllTaskLists().size < 2) {
+                addTaskList(TaskList("Favorite", true))
+                addTaskList(TaskList("My Tasks", true))
+            }
+        }
+    }
 
     override suspend fun addTaskList(taskList: TaskList) {
         taskListDao.addTaskList(mapper.taskListToTaskListEntity(taskList))
@@ -32,7 +35,7 @@ class TaskListRepositoryImpl(private val taskListDao: TaskListDao) : TaskListRep
 
     override suspend fun getAllTaskLists(): List<TaskList> {
         return taskListDao.getAllTaskLists().map {
-            TaskList(it.name, it.id)
+            TaskList(it.name, it.isStandard, it.id)
         }
     }
 

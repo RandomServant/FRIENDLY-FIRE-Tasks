@@ -46,6 +46,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.addTaskListButton.setOnClickListener {
+            if(tabIndex == 0) tabIndex++
             startActivity(
                 vm.taskLists.value?.get(tabIndex)?.let { it1 -> TaskActivity.getIntent(
                     this, it1.id, "true", Task.UNDEFINED_ID) })

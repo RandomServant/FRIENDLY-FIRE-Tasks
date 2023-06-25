@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.maskalor.myapplication.databinding.ActivityTaskListBinding
 import com.maskalor.myapplication.di.Dependencies
 import com.maskalor.myapplication.domain.models.Task
@@ -35,6 +36,7 @@ class TaskListActivity : AppCompatActivity() {
                 taskList = Dependencies.taskListRepository.getTaskList(ID)
 
                 binding.editName.setText(taskList.name)
+                binding.deleteButton.isVisible = !taskList.isStandard
             }
         }
 

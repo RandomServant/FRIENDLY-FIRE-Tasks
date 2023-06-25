@@ -8,5 +8,6 @@ interface TaskRepository {
     suspend fun updateTask(task: Task)
     suspend fun deleteTask(task: Task)
     suspend fun getTasksFromTaskList(id: Int): List<Task>
+    suspend fun getFavoriteTasksFromTaskList(): List<Task>
     suspend fun getTaskFromTaskList(id: Int, taskListId: Int): Task
 }

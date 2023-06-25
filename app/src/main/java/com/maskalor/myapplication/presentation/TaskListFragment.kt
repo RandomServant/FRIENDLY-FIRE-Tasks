@@ -1,6 +1,7 @@
 package com.maskalor.myapplication.presentation
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -46,6 +47,7 @@ class TaskListFragment(private val taskListId: Int) : Fragment() {
         adapter.onLongClick = { task: Task, pos: Int ->
             viewModel.changeFavoriteState(task)
             adapter.update(pos)
+            update()
             true
         }
 
@@ -69,6 +71,19 @@ class TaskListFragment(private val taskListId: Int) : Fragment() {
         val itemTouchHelper = ItemTouchHelper(callback)
             .attachToRecyclerView(binding.rv)
 
-        viewModel.getTasksFromTaskList(taskListId)
+        update()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        update()
+    }
+
+    private fun update() {
+        if (taskListId == 1)
+            viewModel.getFavoriteTasksFromTaskList()
+        else
+            viewModel.getTasksFromTaskList(taskListId)
     }
 }

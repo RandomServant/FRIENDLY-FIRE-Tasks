@@ -7,7 +7,7 @@ import com.maskalor.myapplication.domain.dao.TaskListDao
 import com.maskalor.myapplication.data.room.entity.TaskEntity
 import com.maskalor.myapplication.data.room.entity.TaskListEntity
 
-@Database(entities = [TaskListEntity::class, TaskEntity::class], version = 2)
+@Database(entities = [TaskListEntity::class, TaskEntity::class], version = 4)
 abstract class MyDb : RoomDatabase(){
     abstract fun taskListDao() : TaskListDao
     abstract fun taskDao() : TaskDao

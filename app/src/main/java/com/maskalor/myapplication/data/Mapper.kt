@@ -7,11 +7,11 @@ import com.maskalor.myapplication.domain.models.TaskList
 
 class Mapper {
     fun taskListToTaskListEntity(taskList: TaskList) : TaskListEntity {
-        return TaskListEntity(taskList.id, taskList.name)
+        return TaskListEntity(taskList.id, taskList.name, taskList.isStandard)
     }
 
     fun taskListEntityToTaskList(taskList: TaskListEntity) : TaskList {
-        return TaskList(taskList.name, taskList.id)
+        return TaskList(taskList.name, taskList.isStandard, taskList.id)
     }
 
     fun taskToTaskEntity(task: Task): TaskEntity {

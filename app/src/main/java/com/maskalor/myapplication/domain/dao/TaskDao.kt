@@ -17,6 +17,10 @@ abstract class TaskDao {
     @Query("SELECT * FROM task WHERE taskListId = :taskListId")
     abstract suspend fun getTasksFromTaskList(taskListId: Int): List<TaskEntity>
 
+
+    @Query("SELECT * FROM task WHERE isFavorite = :k")
+    abstract suspend fun getFavoriteTasksFromTaskList(k: Boolean = true): List<TaskEntity>
+
     @Query("SELECT * FROM task WHERE (id = :id AND taskListId = :taskListId)")
     abstract suspend fun getTaskFromTaskList(id: Int, taskListId: Int): TaskEntity
 

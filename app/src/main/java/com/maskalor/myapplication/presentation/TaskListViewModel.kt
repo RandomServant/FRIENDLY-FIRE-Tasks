@@ -23,6 +23,12 @@ class TaskListViewModel : ViewModel() {
         }
     }
 
+    fun getFavoriteTasksFromTaskList() {
+        viewModelScope.launch {
+            list.postValue(taskRepository.getFavoriteTasksFromTaskList())
+        }
+    }
+
     fun changeFavoriteState(task: Task) {
         viewModelScope.launch {
             changeFavoriteState.execute(task)
