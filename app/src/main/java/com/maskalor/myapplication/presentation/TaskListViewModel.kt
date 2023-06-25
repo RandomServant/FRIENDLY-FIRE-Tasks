@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.maskalor.myapplication.di.Dependencies
 import com.maskalor.myapplication.domain.models.Task
 import com.maskalor.myapplication.domain.usecase.AddTaskListUseCase
+import com.maskalor.myapplication.domain.usecase.ChangeFavoriteState
 import com.maskalor.myapplication.domain.usecase.GetAllTaskListUseCase
 import kotlinx.coroutines.launch
 
@@ -14,10 +15,17 @@ class TaskListViewModel : ViewModel() {
     val list = MutableLiveData<List<Task>>()
 
     private val taskRepository = Dependencies.taskRepository
+    private val changeFavoriteState = ChangeFavoriteState(Dependencies.taskRepository)
 
     fun getTasksFromTaskList(id: Int) {
         viewModelScope.launch {
             list.postValue(taskRepository.getTasksFromTaskList(id))
+        }
+    }
+
+    fun changeFavoriteState(task: Task) {
+        viewModelScope.launch {
+            changeFavoriteState.execute(task)
         }
     }
 }

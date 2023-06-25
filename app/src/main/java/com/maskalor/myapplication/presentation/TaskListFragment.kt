@@ -1,18 +1,16 @@
 package com.maskalor.myapplication.presentation
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.maskalor.myapplication.R
 import com.maskalor.myapplication.databinding.FragmentTaskListBinding
+import com.maskalor.myapplication.domain.models.Task
 
 
 class TaskListFragment(private val taskListId: Int) : Fragment() {
@@ -45,6 +43,13 @@ class TaskListFragment(private val taskListId: Int) : Fragment() {
                 TaskActivity.getIntent(it1, it.taskListId, "false", it.id) })
         }
 
+        adapter.onLongClick = { task: Task, pos: Int ->
+            viewModel.changeFavoriteState(task)
+            adapter.update(pos)
+            true
+        }
+
+
         val callback = object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0) {
             override fun onMove(
@@ -57,7 +62,7 @@ class TaskListFragment(private val taskListId: Int) : Fragment() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                TODO("Not yet implemented")
+                return
             }
         }
 
@@ -66,15 +71,4 @@ class TaskListFragment(private val taskListId: Int) : Fragment() {
 
         viewModel.getTasksFromTaskList(taskListId)
     }
-
-//    companion object {
-//        private const val ARG_TASK_LIST_ID = "task_list_id"
-//
-//        fun newInstance(idTaskList: Int) =
-//            TaskListFragment().apply {
-//                arguments = Bundle().apply {
-//                    putInt(ARG_TASK_LIST_ID, idTaskList)
-//                }
-//            }
-//    }
 }

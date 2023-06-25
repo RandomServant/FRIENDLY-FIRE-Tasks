@@ -32,8 +32,35 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.MyViewHolder>(MyDiffUt
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.task_layout, parent, false)
+        val layout = when(viewType) {
+            DEFAULT_TYPE -> {
+                R.layout.task_layout
+            }
+            FAVORITE_TYPE -> {
+                R.layout.favourite_task_layout
+            }
+            else -> {
+                R.layout.task_layout
+            }
+        }
+        val view = LayoutInflater.from(parent.context).inflate(layout, parent, false)
         return MyViewHolder(view)
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return when(currentList[position].isFavorite) {
+            false -> {
+                DEFAULT_TYPE
+            }
+            else -> {
+                FAVORITE_TYPE
+            }
+        }
+
+    }
+
+    fun update(pos: Int) {
+        notifyItemChanged(pos)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
@@ -42,5 +69,15 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.MyViewHolder>(MyDiffUt
         holder.itemView.setOnClickListener {
             onClick?.invoke(currentList[position])
         }
+
+        holder.itemView.setOnLongClickListener{
+            onLongClick?.invoke(currentList[position], position)
+            true
+        }
+    }
+
+    companion object {
+        private const val FAVORITE_TYPE = 101
+        private const val DEFAULT_TYPE = 102
     }
 }
