@@ -1,6 +1,6 @@
 package com.maskalor.myapplication.data
 
-import com.maskalor.myapplication.data.room.dao.TaskListDao
+import com.maskalor.myapplication.domain.dao.TaskListDao
 import com.maskalor.myapplication.data.room.entity.TaskListEntity
 import com.maskalor.myapplication.domain.TaskListRepository
 import com.maskalor.myapplication.domain.models.TaskList
@@ -13,6 +13,7 @@ class TaskListRepositoryImpl(private val taskListDao: TaskListDao) : TaskListRep
 
 //    init {
 //        GlobalScope.launch {
+//            addTaskList(TaskList("Favorite"))
 //            addTaskList(TaskList("My Tasks"))
 //        }
 //    }

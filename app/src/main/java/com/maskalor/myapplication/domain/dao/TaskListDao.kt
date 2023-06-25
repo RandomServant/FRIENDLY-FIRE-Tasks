@@ -1,4 +1,4 @@
-package com.maskalor.myapplication.data.room.dao
+package com.maskalor.myapplication.domain.dao
 
 import androidx.room.*
 import com.maskalor.myapplication.data.room.entity.TaskListEntity

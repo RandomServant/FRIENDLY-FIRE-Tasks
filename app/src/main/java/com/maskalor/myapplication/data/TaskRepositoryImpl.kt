@@ -1,7 +1,7 @@
 package com.maskalor.myapplication.data
 
 import android.util.Log
-import com.maskalor.myapplication.data.room.dao.TaskDao
+import com.maskalor.myapplication.domain.dao.TaskDao
 import com.maskalor.myapplication.domain.TaskRepository
 import com.maskalor.myapplication.domain.models.Task
 import com.maskalor.myapplication.domain.models.TaskList

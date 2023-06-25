@@ -23,12 +23,11 @@ class TaskActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Log.d("1", "2")
         binding = ActivityTaskBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         newStatus = intent.getStringExtra(NEW_STATUS).toString()
-        task = Task("", "", taskListID)
+        task = Task("", "", "", taskListID)
 
         if(newStatus != "true") {
 
@@ -37,17 +36,20 @@ class TaskActivity : AppCompatActivity() {
 
                 binding.editName.setText(task.name)
                 binding.editDesc.setText(task.description)
-                binding.editDate.setText("")
+                binding.editDate.setText(task.date)
+                binding.checkBox.isChecked = task.isFavorite
             }
         }
 
         binding.saveButton.setOnClickListener {
             task.name = binding.editName.text.toString()
             task.description = binding.editDesc.text.toString()
-            val date = binding.editDate.text.toString()
+            task.date = binding.editDate.text.toString()
+            task.isFavorite = binding.checkBox.isChecked
             GlobalScope.launch {
                 if (newStatus == "true")
-                    Dependencies.taskRepository.addTask(Task(task.name, task.description, taskListID))
+                    Dependencies.taskRepository.addTask(Task(task.name, task.description,
+                        task.date, taskListID, task.isFavorite))
                 else
                     Dependencies.taskRepository.updateTask(task)
                 backOnMainActivity()
