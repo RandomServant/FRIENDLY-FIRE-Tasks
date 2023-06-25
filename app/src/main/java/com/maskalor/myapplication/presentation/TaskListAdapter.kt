@@ -19,6 +19,7 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.MyViewHolder>(MyDiffUt
 
     class MyViewHolder(view: View) : ViewHolder(view) {
         val name = view.findViewById<TextView>(R.id.name)
+        val date = view.findViewById<TextView>(R.id.date)
     }
 
     class MyDiffUtil : DiffUtil.ItemCallback<Task>() {
@@ -56,7 +57,6 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.MyViewHolder>(MyDiffUt
                 FAVORITE_TYPE
             }
         }
-
     }
 
     fun update(pos: Int) {
@@ -65,6 +65,7 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.MyViewHolder>(MyDiffUt
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         holder.name.text = currentList[position].name
+        holder.date.text = currentList[position].date
 
         holder.itemView.setOnClickListener {
             onClick?.invoke(currentList[position])

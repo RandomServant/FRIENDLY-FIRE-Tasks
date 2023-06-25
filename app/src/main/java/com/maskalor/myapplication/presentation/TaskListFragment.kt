@@ -51,26 +51,6 @@ class TaskListFragment(private val taskListId: Int) : Fragment() {
             true
         }
 
-
-        val callback = object : ItemTouchHelper.SimpleCallback(
-            ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0) {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                adapter.notifyItemMoved(viewHolder.adapterPosition, target.adapterPosition)
-                return true
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                return
-            }
-        }
-
-        val itemTouchHelper = ItemTouchHelper(callback)
-            .attachToRecyclerView(binding.rv)
-
         update()
     }
 
